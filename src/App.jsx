@@ -42,6 +42,7 @@ const Root = styled.div`
   background: #2c3e50;
   color: white;
   min-height: 100vh;
+  padding-bottom: 2em;
 `
 
 class App extends Component {
