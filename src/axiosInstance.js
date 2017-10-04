@@ -5,10 +5,12 @@ const instance = axios.create({
 })
 
 const errorHandler = err => {
-  const {status, data} = err.response
-  const description = JSON.stringify(data)
-  const msg = `There was an error in the API with code ${status} and data ${description}`
-  window.alert(msg)
+  const res = err.response || {}
+  const data = res.data || {}
+  const name = data.name || err.name
+  const msg = data.message || err.message
+  console.error(`${name}: ${msg}`)
+  return Promise.reject(data)
 }
 
 instance.interceptors.response.use(res => res, errorHandler)
