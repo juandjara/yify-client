@@ -90,11 +90,10 @@ export default class MovieList extends Component {
           </p>
           <GridContainer>
           {movies.map(movie => (
-            <image
+            <MovieImage
               key={movie.id}
               src={movie.medium_cover_image} 
               alt={movie.title}
-              style={{flex: '0 1 25%'}}
             />
           ))}
           </GridContainer>
@@ -102,11 +101,11 @@ export default class MovieList extends Component {
                   onClick={() => this.fetchPage(page_number+1)}
                   style={{display: 'block', margin: '1em auto'}}>
             {loading ? (<Spinner></Spinner>) : (
-              [
+              <span>
                 <i style={{verticalAlign: 'middle'}} 
-                    className="material-icons">autorenew</i>,
+                   className="material-icons">autorenew</i>,
                 <span>Cargar mas</span>
-              ]
+              </span>
             )}
           </Button>
         </section>
