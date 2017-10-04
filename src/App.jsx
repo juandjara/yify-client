@@ -18,9 +18,12 @@ const Header = styled.header`
 const H1 = styled.h1`
   font-weight: 500;
   margin: 0;
+  color: white;
+  font-size: 2em;
   & .material-icons {
     vertical-align: middle;
     margin-left: 5px;
+    margin-bottom: 5px;
   }
 `
 const Input = styled.input`
@@ -35,6 +38,11 @@ const SearchForm = styled.form`
     padding: 5px;
   }
 `
+const Root = styled.div`
+  background: #2c3e50;
+  color: white;
+  min-height: 100vh;
+`
 
 class App extends Component {
   state = {query: ""}
@@ -48,7 +56,7 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter> 
-        <div>
+        <Root>
           <Header>
             <H1>
               <Link to="/">Palomovies</Link>
@@ -75,7 +83,7 @@ class App extends Component {
             <Route path="/" exact component={MovieList} />
             <Route component={NotFound} />
           </Switch>
-        </div>
+        </Root>
       </BrowserRouter>
     );
   }
