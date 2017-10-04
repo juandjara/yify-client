@@ -10,19 +10,66 @@ const Header = styled.header`
   background: black;
   color: white;
   padding: 0.5em;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
 `
 const H1 = styled.h1`
   font-weight: 500;
-  margin: .5rem;
+  margin: 0;
+  & .material-icons {
+    vertical-align: middle;
+    margin-left: 5px;
+  }
+`
+const Input = styled.input`
+  background: white;
+  padding: .5em;
+  border: none;
+  font-size: 1rem;
+`
+const SearchForm = styled.form`
+  display: flex;
+  & .material-icons {
+    padding: 5px;
+  }
 `
 
 class App extends Component {
+  state = {query: ""}
+  handleChange = ev => {
+    const {value} = ev.target
+    this.setState({query: value})
+  }
+  handleSubmit = ev => {
+    ev.preventDefault()
+  }
   render() {
     return (
       <BrowserRouter> 
         <div>
           <Header>
-            <H1><Link to="/">Palomovies</Link></H1>
+            <H1>
+              <Link to="/">Palomovies</Link>
+              <small>
+                <a href="https://palomitas-dl.fuken.xyz"
+                   rel="noopener noreferrer"
+                   target="_blank"
+                   style={{color: 'white'}}>
+                  <i className="material-icons">local_movies</i>
+                </a>
+              </small>
+            </H1>
+            <SearchForm onSubmit={this.handleSubmit}>
+              <i title="" className="material-icons">search</i>
+              <Input
+                placeholder="Escribe para buscar pelis"
+                value={this.state.query}
+                onChange={this.handleChange}
+              />
+              <input type="submit" hidden />
+            </SearchForm>
           </Header>
           <Switch>
             <Route path="/" exact component={MovieList} />
