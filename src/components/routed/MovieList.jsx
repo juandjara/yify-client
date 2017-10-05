@@ -31,8 +31,17 @@ const GridContainer = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
 `
-const MovieImage = styled.img`
+const GridItem = styled.div`
   flex: 0 1 25%;
+  padding: .5em;
+  @media(max-width: 600px) {
+    flex-basis: 50%;
+  }
+`
+const MovieImage = styled.img`
+  display: block;
+  margin: auto;
+  width: 100%;
 `
 
 export default class MovieList extends Component {
@@ -90,11 +99,9 @@ export default class MovieList extends Component {
           </p>
           <GridContainer>
           {movies.map(movie => (
-            <MovieImage
-              key={movie.id}
-              src={movie.medium_cover_image} 
-              alt={movie.title}
-            />
+            <GridItem key={movie.id}>
+              <MovieImage src={movie.medium_cover_image} alt={movie.title} />
+            </GridItem>
           ))}
           </GridContainer>
           <Button disabled={loading}
