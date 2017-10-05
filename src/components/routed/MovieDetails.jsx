@@ -6,6 +6,7 @@ import Icon from '../shared/Icon'
 
 const InfoSection = styled.section`
   display: flex;
+  flex-wrap: wrap;
   padding: 1rem;
   max-width: 1200px;
   margin: auto;
@@ -20,14 +21,14 @@ const InfoSectionInner = styled.div`
   margin: 1rem;
 `
 const IconMetricGroup = styled.div`
-  padding: 4px 0;
+  padding: 5px 0;
   .material-icons {
     margin-right: 6px;
   }
 `
 const Metric = styled.strong`
   display: inline-block;
-  min-width: 70px;
+  min-width: 80px;
 `
 const ImageBackground = styled.main`
   background: url(${props => props.background}) no-repeat;
@@ -79,7 +80,8 @@ export default class MovieDetails extends Component {
     return (
       <ImageBackground background={movie.background_image}>
         <InfoSection>
-          <img src={movie.medium_cover_image} 
+          <img src={movie.medium_cover_image}
+               style={{margin: '1rem'}}
                alt={`Medium Cover for ${movie.title}`} />
           <InfoSectionInner>
             <MovieHeader>{movie.title_long}</MovieHeader>    
@@ -88,7 +90,7 @@ export default class MovieDetails extends Component {
             </p>        
             <IconMetricGroup>
               <Icon>access_time</Icon>
-              <Metric>{movie.runtime}</Metric>
+              <Metric>{movie.runtime} min.</Metric>
               <span>Duraci&oacute;n</span>
             </IconMetricGroup>
             <IconMetricGroup>
