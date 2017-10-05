@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import axios from '../../axiosInstance'
 import styled from 'styled-components'
-import Spinner from 'elemental/lib/components/Spinner'
 import Button from 'elemental/lib/components/Button'
+import Spinner from '../shared/SpinnerCentered'
 import Icon from '../shared/Icon'
 
 const Section = styled.section`
@@ -21,10 +21,6 @@ const IconSectionItem = styled.div`
   & > p {
     font-size: 1.2em;
   }
-`
-const SpinnerCentered = styled(Spinner)`
-  display: block;
-  margin: auto;
 `
 const GridContainer = styled.div`
   display: flex;
@@ -114,7 +110,7 @@ export default class MovieList extends Component {
             </p>
           </IconSectionItem>
         </Section>
-        {loading && <SpinnerCentered size="lg" type="inverted" />}
+        {loading && <Spinner size="lg" type="inverted" />}
         <section>
           <p style={{margin: '1rem'}}>
             Mostrando {movies.length} de {movie_count} peliculas
