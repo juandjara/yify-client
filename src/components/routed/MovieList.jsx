@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import axios from '../../axiosInstance'
+import axios from '../../services/axiosInstance'
 import styled from 'styled-components'
 import Button from 'elemental/lib/components/Button'
 import Spinner from '../shared/SpinnerCentered'
