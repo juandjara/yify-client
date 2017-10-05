@@ -5,6 +5,7 @@ import Button from 'elemental/lib/components/Button'
 import Spinner from '../shared/SpinnerCentered'
 import Icon from '../shared/Icon'
 import {Link} from 'react-router-dom'
+import qs from 'qs'
 
 const Section = styled.section`
   display: flex;
@@ -73,16 +74,27 @@ export default class MovieList extends Component {
   componentDidMount() {
     this.fetchPage(0)
   }
-  fetchPage(page) {
+  componentDidUpdate(prevProps, prevState) {
+    const prevQuery = this.getQueryFromURL(prevProps)
+    const nextQuery = this.getQueryFromURL(this.props)
+    if(nextQuery !== prevQuery) {
+      this.fetchPage(this.state.page_number, nextQuery, true)
+    }
+  }
+  getQueryFromURL(props) {
+    const queryStr = props.location.search.slice(1)
+    return qs.parse(queryStr).q
+  }
+  fetchPage(page, query, replaceMovies) {
     this.setState({loading: true})
     axios.get('/movies', {
-      params: {page}
+      params: {page, queryTerm: query}
     })
     .then(res => res.data)
     .then(json => {
       const {movie_count, movies, page_number} = json.data
       this.setState(prevState => ({
-        movies: prevState.movies.concat(movies),
+        movies: replaceMovies ? movies : prevState.movies.concat(movies),
         movie_count,
         page_number,
         loading: false
@@ -117,7 +129,7 @@ export default class MovieList extends Component {
             Mostrando {movies.length} de {movie_count} peliculas
           </p>
           <GridContainer>
-          {movies.map(movie => (
+          {movies.filter(m => m && m.id).map(movie => (
             <GridItem to={`/movies/${movie.id}/${movie.slug}`} key={movie.id}>
               <MovieImage src={movie.medium_cover_image} alt={movie.title} />
               <MovieTitle>{movie.title}</MovieTitle>
