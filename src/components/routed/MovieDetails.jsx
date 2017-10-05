@@ -62,6 +62,15 @@ export default class MovieDetails extends Component {
       })
     })
   }
+  getDate(movie) {
+    const date = new Date(movie.date_uploaded_unix * 1000)
+    let day = date.getDate()
+        day = day < 10 ? "0"+day : day
+    let month = date.getMonth()
+        month = month < 10 ? "0"+month : month
+    const year = date.getFullYear().toString().slice(2)
+    return `${day}/${month}/${year}`
+  }
   render () {
     if(this.state.loading) {
       return <Spinner size="lg" type="inverted" />
@@ -101,7 +110,17 @@ export default class MovieDetails extends Component {
               <Icon>file_download</Icon>
               <Metric>{movie.download_count}</Metric>
               <span>Descargas</span>
-            </IconMetricGroup> 
+            </IconMetricGroup>
+            <IconMetricGroup>
+              <Icon>language</Icon>
+              <Metric>{movie.language}</Metric>
+              <span>Idioma</span>
+            </IconMetricGroup>
+            <IconMetricGroup>
+              <Icon>event</Icon>
+              <Metric>{this.getDate(movie)}</Metric>
+              <span>Fecha de subida</span>
+            </IconMetricGroup>
           </InfoSectionInner>
         </InfoSection>
       </ImageBackground>
