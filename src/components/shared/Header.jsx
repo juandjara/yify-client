@@ -49,7 +49,7 @@ export default class Header extends Component {
     ev.preventDefault()
     const {query}   = this.state
     const {history} = this.context.router
-    history.push(`/?q=${query}`)
+    history.push(`/movies?q=${query}`)
   }
   handleChange = ev => {
     const {value} = ev.target

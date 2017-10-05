@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import Button from 'elemental/lib/components/Button'
 import Spinner from '../shared/SpinnerCentered'
 import Icon from '../shared/Icon'
+import {Link} from 'react-router-dom'
 
 const Section = styled.section`
   display: flex;
@@ -28,7 +29,7 @@ const GridContainer = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
 `
-const GridItem = styled.a`
+const GridItem = styled(Link)`
   position: relative;
   flex: 0 1 20%;
   min-height: 100px;
@@ -117,7 +118,7 @@ export default class MovieList extends Component {
           </p>
           <GridContainer>
           {movies.map(movie => (
-            <GridItem href="/id" key={movie.id}>
+            <GridItem to={`/movies/${movie.id}/${movie.slug}`} key={movie.id}>
               <MovieImage src={movie.medium_cover_image} alt={movie.title} />
               <MovieTitle>{movie.title}</MovieTitle>
             </GridItem>

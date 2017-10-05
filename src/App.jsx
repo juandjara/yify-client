@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components'
-import { Route, Switch, BrowserRouter } from 'react-router-dom'
+import { Route, Redirect, Switch, BrowserRouter } from 'react-router-dom'
 import Header from './components/shared/Header'
 
 import MovieList from './components/routed/MovieList'
+import MovieDetails from './components/routed/MovieDetails'
 import NotFound from './components/routed/NotFound'
 
 const Root = styled.div`
@@ -18,7 +19,9 @@ const App = () => (
     <Root>
       <Header />
       <Switch>
-        <Route path="/" exact component={MovieList} />
+        <Route path="/" exact render={() => (<Redirect to="/movies" />)} />
+        <Route path="/movies" exact component={MovieList} />
+        <Route path="/movies/:id/:slug" component={MovieDetails} />
         <Route component={NotFound} />
       </Switch>
     </Root>
