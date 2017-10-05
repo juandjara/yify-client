@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import Link from '../shared/LinkReset'
-import Button from '../shared/Button'
+import Button from 'elemental/lib/components/Button'
 
 const Centered = styled.div`
   text-align: center;
@@ -13,6 +13,7 @@ const Centered = styled.div`
 `
 const Header404 = styled.h1`
   opacity: 0.5;
+  color: white;
   font-size: 3em;
 `
 const Donger = styled.p`

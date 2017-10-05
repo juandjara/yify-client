@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import axios from '../../axiosInstance'
 import styled from 'styled-components'
 import Spinner from 'elemental/lib/components/Spinner'
-import {Button} from 'elemental'
+import Button from 'elemental/lib/components/Button'
 import Icon from '../shared/Icon'
 
 const Section = styled.section`
@@ -49,6 +49,10 @@ const MovieImage = styled.img`
   margin: auto;
   width: 100%;
   padding: .5em;
+  transition: padding .3s ease-out;
+  &:hover {
+    padding: 0;
+  }
 `
 const MovieTitle = styled.div`
   margin: 0 .5rem;  
