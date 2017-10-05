@@ -3,6 +3,7 @@ import axios from '../../axiosInstance'
 import styled from 'styled-components'
 import Spinner from 'elemental/lib/components/Spinner'
 import {Button} from 'elemental'
+import Icon from '../shared/Icon'
 
 const Section = styled.section`
   display: flex;
@@ -31,10 +32,15 @@ const GridContainer = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
 `
-const GridItem = styled.div`
-  flex: 0 1 25%;
-  padding: .5em;
-  @media(max-width: 600px) {
+const GridItem = styled.a`
+  position: relative;
+  flex: 0 1 20%;
+  min-height: 100px;
+  display: block;
+  @media(max-width: 60em) {
+    flex-basis: 25%;
+  }
+  @media(max-width: 40em) {
     flex-basis: 50%;
   }
 `
@@ -42,6 +48,18 @@ const MovieImage = styled.img`
   display: block;
   margin: auto;
   width: 100%;
+  padding: .5em;
+`
+const MovieTitle = styled.div`
+  margin: 0 .5rem;  
+  padding: 1rem;
+  color: white;
+  background: rgba(0,0,0, 0.6);
+  position: absolute;
+  bottom: .5rem;
+  width: calc(100% - 1rem);
+  font-weight: bold;
+  font-size: 1.1em;
 `
 
 export default class MovieList extends Component {
@@ -76,15 +94,15 @@ export default class MovieList extends Component {
       <main>
         <Section>
           <IconSectionItem>
-            <div><i className="material-icons">local_play</i></div>
+            <div><Icon>local_play</Icon></div>
             <p>Peliculas en version original</p>
           </IconSectionItem>
           <IconSectionItem>
-            <div><i className="material-icons">language</i></div>
+            <div><Icon>language</Icon></div>
             <p>Subtitulos en todos los idiomas</p>
           </IconSectionItem>
           <IconSectionItem>
-            <div><i className="material-icons">code</i></div>
+            <div><Icon>code</Icon></div>
             <p>
               Proyecto de codigo abierto. Todas las 
               {' '}<a href="https://github.com/juandjara/yify-client">contribuciones</a> 
@@ -99,8 +117,9 @@ export default class MovieList extends Component {
           </p>
           <GridContainer>
           {movies.map(movie => (
-            <GridItem key={movie.id}>
+            <GridItem href="/id" key={movie.id}>
               <MovieImage src={movie.medium_cover_image} alt={movie.title} />
+              <MovieTitle>{movie.title}</MovieTitle>
             </GridItem>
           ))}
           </GridContainer>
@@ -109,8 +128,7 @@ export default class MovieList extends Component {
                   style={{display: 'block', margin: '1em auto'}}>
             {loading ? (<Spinner></Spinner>) : (
               <span>
-                <i style={{verticalAlign: 'middle'}} 
-                   className="material-icons">autorenew</i>,
+                <Icon>autorenew</Icon>
                 <span>Cargar mas</span>
               </span>
             )}
