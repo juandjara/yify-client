@@ -130,7 +130,7 @@ export default class MovieList extends Component {
           </p>
           <GridContainer>
           {movies.filter(m => m && m.id).map(movie => (
-            <GridItem to={`/movies/${movie.id}/${movie.slug}`} key={movie.id}>
+            <GridItem to={`/movies/${movie.id}/${movie.imdb_code}/${movie.slug}`} key={movie.id}>
               <MovieImage src={movie.medium_cover_image} alt={movie.title} />
               <MovieTitle>{movie.title}</MovieTitle>
             </GridItem>

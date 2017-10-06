@@ -21,7 +21,7 @@ const App = () => (
       <Switch>
         <Route path="/" exact render={() => (<Redirect to="/movies" />)} />
         <Route path="/movies" exact component={MovieList} />
-        <Route path="/movies/:id/:slug" component={MovieDetails} />
+        <Route path="/movies/:id/:imdbid/:slug" component={MovieDetails} />
         <Route component={NotFound} />
       </Switch>
     </Root>
