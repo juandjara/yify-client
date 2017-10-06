@@ -30,7 +30,7 @@ const Metric = styled.strong`
   display: inline-block;
   min-width: 80px;
 `
-const ImageBackground = styled.main`
+const ImageBackground = styled.div`
   background: url(${props => props.background}) no-repeat;
   background-size: cover;
   background-position: 50% 50%;
@@ -42,6 +42,20 @@ const GenreLabel = styled.small`
   padding: 3px 6px;
   border-radius: 3px;
   font-weight: bold;
+`
+const ActorInfo = styled.div`
+  display: flex;
+  align-items: center;
+  padding-bottom: 1em;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 1em;
+  &:last-child {
+    border: none;
+  }
+  img {
+    margin-right: 1em;
+    border-radius: 50%;
+  }
 `
 
 export default class MovieDetails extends Component {
@@ -78,54 +92,80 @@ export default class MovieDetails extends Component {
     }
     const {movie} = this.state
     return (
-      <ImageBackground background={movie.background_image}>
+      <main>
+        <ImageBackground background={movie.background_image}>
+          <InfoSection>
+            <img src={movie.medium_cover_image}
+                 style={{margin: '1rem'}}
+                 alt={`Medium Cover for ${movie.title}`} />
+            <InfoSectionInner>
+              <MovieHeader>{movie.title_long}</MovieHeader>    
+              <p>
+                {movie.genres.map(genre => (
+                  <GenreLabel key={genre}>{genre}</GenreLabel>
+                ))}
+              </p>
+              <IconMetricGroup>
+                <Icon>access_time</Icon>
+                <Metric>{movie.runtime} min.</Metric>
+                <span>Duraci&oacute;n</span>
+              </IconMetricGroup>
+              <IconMetricGroup>
+                <Icon>visibility</Icon>
+                <Metric>{movie.mpa_rating}</Metric>
+                <span>Clasificaci&oacute;n por edades</span>
+              </IconMetricGroup>
+              <IconMetricGroup>
+                <Icon>thumb_up</Icon>
+                <Metric>{movie.like_count}</Metric>
+                <span>Me gusta</span>
+              </IconMetricGroup>
+              <IconMetricGroup>
+                <Icon>assessment</Icon>
+                <Metric>{movie.rating}</Metric>
+                <span>Puntuaci&oacute;n IMDB</span>
+              </IconMetricGroup>
+              <IconMetricGroup>
+                <Icon>file_download</Icon>
+                <Metric>{movie.download_count}</Metric>
+                <span>Descargas</span>
+              </IconMetricGroup>
+              <IconMetricGroup>
+                <Icon>language</Icon>
+                <Metric>{movie.language}</Metric>
+                <span>Idioma</span>
+              </IconMetricGroup>
+              <IconMetricGroup>
+                <Icon>event</Icon>
+                <Metric>{this.getDate(movie)}</Metric>
+                <span>Fecha de subida</span>
+              </IconMetricGroup>
+            </InfoSectionInner>
+          </InfoSection>
+        </ImageBackground>
         <InfoSection>
-          <img src={movie.medium_cover_image}
-               style={{margin: '1rem'}}
-               alt={`Medium Cover for ${movie.title}`} />
-          <InfoSectionInner>
-            <MovieHeader>{movie.title_long}</MovieHeader>    
-            <p>
-              {movie.genres.map(genre => <GenreLabel key={genre}>{genre}</GenreLabel>)}
-            </p>        
-            <IconMetricGroup>
-              <Icon>access_time</Icon>
-              <Metric>{movie.runtime} min.</Metric>
-              <span>Duraci&oacute;n</span>
-            </IconMetricGroup>
-            <IconMetricGroup>
-              <Icon>visibility</Icon>
-              <Metric>{movie.mpa_rating}</Metric>
-              <span>Clasificaci&oacute;n por edades</span>
-            </IconMetricGroup>
-            <IconMetricGroup>
-              <Icon>thumb_up</Icon>
-              <Metric>{movie.like_count}</Metric>
-              <span>Me gusta</span>
-            </IconMetricGroup>
-            <IconMetricGroup>
-              <Icon>assessment</Icon>
-              <Metric>{movie.rating}</Metric>
-              <span>Puntuaci&oacute;n IMDB</span>
-            </IconMetricGroup>
-            <IconMetricGroup>
-              <Icon>file_download</Icon>
-              <Metric>{movie.download_count}</Metric>
-              <span>Descargas</span>
-            </IconMetricGroup>
-            <IconMetricGroup>
-              <Icon>language</Icon>
-              <Metric>{movie.language}</Metric>
-              <span>Idioma</span>
-            </IconMetricGroup>
-            <IconMetricGroup>
-              <Icon>event</Icon>
-              <Metric>{this.getDate(movie)}</Metric>
-              <span>Fecha de subida</span>
-            </IconMetricGroup>
-          </InfoSectionInner>
+          <div>
+            <MovieHeader>Reparto</MovieHeader>
+            {movie.cast.map(actor => (
+              <ActorInfo key={actor.imdb_code} style={{display: 'flex', alignItems: 'center'}}>
+                <img src={actor.url_small_image} 
+                     alt={`IMDB Avatar for ${actor.name}`} />
+                <div>
+                  <strong>{actor.character_name}</strong>
+                  <br/>
+                  <span>{actor.name}</span>
+                </div>
+              </ActorInfo>
+            ))}
+          </div>
+          <div style={{flex: 1, marginLeft: '2em'}}>
+            <MovieHeader>Sinopsis</MovieHeader>
+            <p style={{lineHeight: '24px', fontSize: '16px'}}>
+              {movie.description_full}
+            </p>
+          </div>
         </InfoSection>
-      </ImageBackground>
+      </main>
     );
   }
 }
