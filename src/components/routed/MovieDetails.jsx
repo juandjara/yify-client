@@ -198,7 +198,7 @@ export default class MovieDetails extends Component {
             </p>
             <MovieHeader>Video</MovieHeader>
             {!selectedMagnet && (<p>Por favor, seleccione una calidad</p>)}            
-            <div style={{display: 'flex'}}>
+            <div style={{display: 'flex', flexWrap: 'wrap'}}>
               <div style={{marginTop: '1em', marginRight: '1em'}}>
                 <ButtonGroup>
                   {movie.torrents.map(torrent => (
