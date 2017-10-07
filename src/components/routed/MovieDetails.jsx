@@ -14,6 +14,9 @@ const InfoSection = styled.section`
   padding: 1rem;
   max-width: 1200px;
   margin: auto;
+  @media(max-width: 600px) {
+    display: block;
+  }
 `
 const MovieHeader = styled.h2`
   color: white;
@@ -64,6 +67,12 @@ const ActorInfo = styled.div`
 const QualityButton = styled(Button)`
   min-width: 65px;
   margin: 4px 0;
+`
+const VideoGroup = styled.div`
+  display: flex;
+  @media(max-width: 600px) {
+    display: block;
+  }
 `
 
 export default class MovieDetails extends Component {
@@ -198,7 +207,7 @@ export default class MovieDetails extends Component {
             </p>
             <MovieHeader>Video</MovieHeader>
             {!selectedMagnet && (<p>Por favor, seleccione una calidad</p>)}            
-            <div style={{display: 'flex', flexWrap: 'wrap'}}>
+            <VideoGroup>
               <div style={{marginTop: '1em', marginRight: '1em'}}>
                 <ButtonGroup>
                   {movie.torrents.map(torrent => (
@@ -221,7 +230,7 @@ export default class MovieDetails extends Component {
               <div style={{flex: 1}}>
                 <MagnetLoader subtitles={subtitles} magnet={selectedMagnet} />                
               </div>
-            </div>
+            </VideoGroup>
             <MovieHeader>Subtitulos</MovieHeader>
             <SubtitleSelector 
               imdbid={movie.imdb_code}
