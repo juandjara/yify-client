@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/juandjara/yify-client.svg?branch=master)](https://travis-ci.org/juandjara/hsubs-player)
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>

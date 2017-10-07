@@ -1,0 +1,11 @@
+language: node_js
+node_js:
+  ">=7"
+before_script:
+  - npm install
+script: npm run build
+deploy:
+  provider: surge
+  project: ./build/
+  domain: palomovies.surge.sh
+  skip_cleanup: true
