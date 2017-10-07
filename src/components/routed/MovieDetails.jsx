@@ -4,6 +4,9 @@ import axios from '../../services/axiosInstance'
 import styled from 'styled-components'
 import Icon from '../shared/Icon'
 import SubtitleSelector from '../shared/SubtitleSelector'
+import ButtonGroup from 'elemental/lib/components/ButtonGroup'
+import Button from 'elemental/lib/components/Button'
+import MagnetLoader from '../shared/MagnetLoader'
 
 const InfoSection = styled.section`
   display: flex;
@@ -58,6 +61,10 @@ const ActorInfo = styled.div`
     border-radius: 50%;
   }
 `
+const QualityButton = styled(Button)`
+  min-width: 65px;
+  margin: 4px 0;
+`
 
 export default class MovieDetails extends Component {
   state = {
@@ -71,6 +78,7 @@ export default class MovieDetails extends Component {
     })
     .then(res => res.data)
     .then(json => {
+      console.log(json.data.movie)
       this.setState({
         loading: false,
         movie: json.data.movie
@@ -89,11 +97,28 @@ export default class MovieDetails extends Component {
   addSubtitle(subtitle) {
     console.log(subtitle)
   }
+  getMagnetLink(torrent) {
+    return  `magnet:?xt=urn:btih:${torrent.hash}
+      &tr=udp://glotorrents.pw:6969/announce
+      &tr=udp://tracker.opentrackr.org:1337/announce
+      &tr=udp://torrent.gresille.org:80/announce
+      &tr=udp://tracker.openbittorrent.com:80
+      &tr=udp://tracker.coppersurfer.tk:6969
+      &tr=udp://tracker.leechers-paradise.org:6969
+      &tr=udp://p4p.arenabg.ch:1337
+      &tr=udp://tracker.internetwarriors.net:1337`
+  }
+  selectQuality(torrent) {
+    this.setState({
+      selectedTorrent: torrent, 
+      selectedMagnet: this.getMagnetLink(torrent)
+    })
+  }
   render () {
     if(this.state.loading) {
       return <Spinner size="lg" type="inverted" />
     }
-    const {movie} = this.state
+    const {movie, selectedTorrent, selectedMagnet} = this.state
     return (
       <main>
         <ImageBackground background={movie.background_image}>
@@ -167,6 +192,31 @@ export default class MovieDetails extends Component {
               {movie.description_full}
             </p>
             <MovieHeader>Video</MovieHeader>
+            {!selectedMagnet && (<p>Por favor, seleccione una calidad</p>)}            
+            <div style={{display: 'flex'}}>
+              <div style={{marginTop: '1em', marginRight: '1em'}}>
+                <ButtonGroup>
+                  {movie.torrents.map(torrent => (
+                    <QualityButton
+                      key={torrent.quality} 
+                      size="sm" type="primary"
+                      onClick={() => this.selectQuality(torrent)}>
+                      {torrent.quality}
+                    </QualityButton>
+                  ))}
+                </ButtonGroup>
+                {selectedTorrent && (
+                  <div>
+                    <p>Tamaño: <strong>{selectedTorrent.size}</strong></p>
+                    <p>Seeds: <strong>{selectedTorrent.seeds}</strong></p>
+                    <p>Peers: <strong>{selectedTorrent.peers}</strong></p>
+                  </div>                
+                )}
+              </div>
+              <div style={{flex: 1}}>
+                <MagnetLoader magnet={selectedMagnet} />                
+              </div>
+            </div>
             <MovieHeader>Subtitulos</MovieHeader>
             <SubtitleSelector 
               imdbid={movie.imdb_code}
