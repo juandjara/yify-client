@@ -58,11 +58,19 @@ export default class SubtitleSelector extends Component {
     const option = subs.filter(option => option.langShort === selectedLang)[0] || {}
     return option.subs
   }
+  getSubtitleLink(subData) {
+    return `https://yify-api.now.sh/subs/${this.props.imdbid}/${subData.index}`
+  }
+  handleSelect(subData) {
+    this.props.onSelect({
+      ...subData,
+      link: this.getSubtitleLink(subData)
+    })
+  }
   render () {
     if(this.state.loading) {
       return <Spinner size="lg" type="inverted" />
     }
-    const {imdbid, onSelect} = this.props
     const options = this.getSelectOptions()
     const subs = this.getSelectedSubs()
     return (
@@ -75,10 +83,10 @@ export default class SubtitleSelector extends Component {
         <List>
           {subs.map(subData => (
             <li key={subData.index}>
-              <ListIcon onClick={() => this.props.onSelect(subData)}>
+              <ListIcon onClick={() => this.handleSelect(subData)}>
                 play_arrow
               </ListIcon>
-              <a href={`https://yify-api.now.sh/subs/${imdbid}/${subData.index}`}>
+              <a href={this.getSubtitleLink(subData)}>
                 <ListIcon>file_download</ListIcon>
               </a>
               <span>{subData.name}</span>
