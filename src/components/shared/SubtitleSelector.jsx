@@ -75,7 +75,8 @@ export default class SubtitleSelector extends Component {
     const subs = this.getSelectedSubs()
     return (
       <div>
-        <Select 
+        <Select
+          style={{cursor: 'pointer'}}
           options={options}
           firstOption="Por favor, seleccione un lenguaje..."
           onChange={value => this.setState({selectedLang: value})} 
