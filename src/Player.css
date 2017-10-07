@@ -1,0 +1,8 @@
+.player-btn {
+  border: none !important;
+  background: none !important;
+}
+.player-btn:before {
+  font-size: 4em;
+  text-shadow: 0 0 5px #333;
+}

@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 @import url("https://fonts.googleapis.com/css?family=Roboto");
 @import './elemental.css';
+@import './Player.css';
 
 body {
   margin: 0;
