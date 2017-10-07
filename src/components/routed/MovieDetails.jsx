@@ -3,6 +3,7 @@ import Spinner from '../shared/SpinnerCentered'
 import axios from '../../services/axiosInstance'
 import styled from 'styled-components'
 import Icon from '../shared/Icon'
+import SubtitleSelector from '../shared/SubtitleSelector'
 
 const InfoSection = styled.section`
   display: flex;
@@ -70,7 +71,6 @@ export default class MovieDetails extends Component {
     })
     .then(res => res.data)
     .then(json => {
-      console.log(json.data)
       this.setState({
         loading: false,
         movie: json.data.movie
@@ -85,6 +85,9 @@ export default class MovieDetails extends Component {
         month = month < 10 ? "0"+month : month
     const year = date.getFullYear().toString().slice(2)
     return `${day}/${month}/${year}`
+  }
+  addSubtitle(subtitle) {
+    console.log(subtitle)
   }
   render () {
     if(this.state.loading) {
@@ -144,7 +147,7 @@ export default class MovieDetails extends Component {
           </InfoSection>
         </ImageBackground>
         <InfoSection>
-          <div>
+          <div style={{margin: '0 1em'}}>
             <MovieHeader>Reparto</MovieHeader>
             {movie.cast.map(actor => (
               <ActorInfo key={actor.imdb_code} style={{display: 'flex', alignItems: 'center'}}>
@@ -158,11 +161,17 @@ export default class MovieDetails extends Component {
               </ActorInfo>
             ))}
           </div>
-          <div style={{flex: 1, marginLeft: '2em'}}>
+          <div style={{flex: 1, margin: '0 1em'}}>
             <MovieHeader>Sinopsis</MovieHeader>
             <p style={{lineHeight: '24px', fontSize: '16px'}}>
               {movie.description_full}
             </p>
+            <MovieHeader>Video</MovieHeader>
+            <MovieHeader>Subtitulos</MovieHeader>
+            <SubtitleSelector 
+              imdbid={movie.imdb_code}
+              onSelect={this.addSubtitle}
+            />
           </div>
         </InfoSection>
       </main>
