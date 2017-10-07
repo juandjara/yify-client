@@ -69,7 +69,10 @@ const QualityButton = styled(Button)`
 export default class MovieDetails extends Component {
   state = {
     loading: true,
-    movie: {}
+    movie: {},
+    subtitles: [],
+    selectedMagnet: "",
+    selectedTorrent: null,
   }
   componentDidMount() {
     const {id} = this.props.match.params
@@ -94,8 +97,10 @@ export default class MovieDetails extends Component {
     const year = date.getFullYear().toString().slice(2)
     return `${day}/${month}/${year}`
   }
-  addSubtitle(subtitle) {
-    console.log(subtitle)
+  addSubtitle = (subtitle) => {
+    this.setState(prevState => ({
+      subtitles: prevState.subtitles.concat(subtitle)
+    }))
   }
   getMagnetLink(torrent) {
     return  `magnet:?xt=urn:btih:${torrent.hash}
@@ -118,7 +123,7 @@ export default class MovieDetails extends Component {
     if(this.state.loading) {
       return <Spinner size="lg" type="inverted" />
     }
-    const {movie, selectedTorrent, selectedMagnet} = this.state
+    const {movie, selectedTorrent, selectedMagnet, subtitles} = this.state
     return (
       <main>
         <ImageBackground background={movie.background_image}>
@@ -214,7 +219,7 @@ export default class MovieDetails extends Component {
                 )}
               </div>
               <div style={{flex: 1}}>
-                <MagnetLoader magnet={selectedMagnet} />                
+                <MagnetLoader subtitles={subtitles} magnet={selectedMagnet} />                
               </div>
             </div>
             <MovieHeader>Subtitulos</MovieHeader>
