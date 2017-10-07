@@ -13,7 +13,7 @@ const downloader = "https://palomitas-dl.fuken.xyz"
 class MagnetLoader extends Component {
   static propTypes = {
     subtitles: propTypes.array,
-    magnet: propTypes.string.isRequired
+    magnet: propTypes.string
   }
   constructor() {
     super();
@@ -107,7 +107,7 @@ class MagnetLoader extends Component {
   }
 
   render() {
-    const {magnet, subtitles} = this.props
+    const {magnet, subtitles = []} = this.props
     if(!magnet) {
       return null;
     }
