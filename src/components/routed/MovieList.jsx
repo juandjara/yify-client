@@ -72,7 +72,7 @@ export default class MovieList extends Component {
     loading: true
   }
   componentDidMount() {
-    this.fetchPage(0)
+    this.fetchPage(0, this.getQueryFromURL(this.props))
   }
   componentDidUpdate(prevProps, prevState) {
     const prevQuery = this.getQueryFromURL(prevProps)
