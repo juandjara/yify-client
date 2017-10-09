@@ -186,12 +186,13 @@ export default class MovieDetails extends Component {
           </InfoSection>
         </ImageBackground>
         <InfoSection>
-          <div style={{margin: '0 1em'}}>
+          <div style={{margin: '0 1em', maxWidth: 300}}>
             <MovieHeader>Reparto</MovieHeader>
             {movie.cast.map(actor => (
               <ActorInfo key={actor.imdb_code} style={{display: 'flex', alignItems: 'center'}}>
                 <img src={actor.url_small_image} 
-                     alt={`IMDB Avatar for ${actor.name}`} />
+                     alt={`IMDB Avatar`}
+                     style={{minWidth: 60, maxWidth: 60}} />
                 <div>
                   <strong>{actor.character_name}</strong>
                   <br/>
